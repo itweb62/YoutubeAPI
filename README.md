@@ -1,8 +1,18 @@
 # YoutubeAPI
 
+
+Prérequis :
+
+Nodejs & npm 
+https://nodejs.org/en/
+
+git clone git@github.com:itweb62/YoutubeAPI.git
+
 npm install 
 
 node index.js
+
+http://localhost:5000/
 
 "@types/node": "^16.11.7",
 "body-parser": "^1.19.0",
@@ -14,3 +24,5 @@ node index.js
 "jsonwebtoken": "^8.5.1",
 "multer": "^1.4.3",
 "path": "^0.12.7"
+
+
