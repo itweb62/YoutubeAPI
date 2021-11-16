@@ -1,6 +1,7 @@
 # YoutubeAPI
 
 npm install 
+
 node index.ts
 
 "@types/node": "^16.11.7",
