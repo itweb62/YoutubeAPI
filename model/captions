@@ -1,0 +1,64 @@
+class Captions {
+
+  constructor(id, snippet) {
+    this.id = id;
+    this.snippet = snippet;
+
+    switch(this.snippet.trackKind)
+    {
+      case "ASR" :
+        this.snippet.trackKindTrad  = "Automatique";
+      break;
+      case "ASR" :
+        this.snippet.trackKindTrad   = "forced";
+      break;
+      case "standard" :
+        this.snippet.trackKindTrad   = "forced";
+      break;
+    }
+    switch(this.snippet.audioTrackType)
+    {
+      case "commentary" :
+        this.snippet.audioTrackTypeTrad = "Audio alternatif";
+      break;
+      case "descriptive" :
+        this.snippet.audioTrackTypeTrad = "Description addictionnel";
+      break;
+      case "primary" :
+        this.snippet.audioTrackTypeTrad = "Piste principal";
+      break;
+      case "unknown" :
+        this.snippet.audioTrackTypeTrad = "Inconnue";
+      break;
+    }
+
+    if( this.snippet.isCC == true )
+      this.snippet.isCCTrad  = "Oui";
+    else
+      this.snippet.isCCTrad = "Non";
+
+    if(this.snippet.isEasyReader == true )
+        this.snippet.isEasyReaderTrad  = "Oui";
+    else
+        this.snippet.isEasyReaderTrad  = "Non";
+
+
+    if( this.snippet.isAutoSynced == true )
+        this.snippet.isAutoSyncedTrad = "Oui";
+    else
+        this.snippet.isAutoSyncedTrad = "Non";
+
+    if( this.snippet.isDraft == true )
+        this.snippet.isDraftTrad = "Oui";
+    else
+        this.snippet.isDraftTrad = "Non";
+    
+  }
+
+  getCaptions()
+  {
+    return this;
+  }
+}
+
+module.exports = Captions;

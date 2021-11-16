@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Youtube API v3 Display</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+</head>
+<body>
+  <div class="container" style="margin-top: 50px;">
+    <h1 style="text-align: center;font-family: Georgia, 'Times New Roman', Times, serif;">Youtube API v3 Display</h1>
+
+    <div class="row d-flex justify-content-center">
+      <div class="table-responsive" style="margin-top: 50px;">
+        <table class="table table-hover" id="myTable">
+          <thead>
+            <tr>
+              <th scope="col">ID</th>
+              <th scope="col">VideoID</th>
+              <th scope="col">Video</th>
+              <th scope="col">Titre</th>
+              <th scope="col">Description</th>
+              <th scope="col"></th>
+            </tr>
+          </thead>
+          <tbody>
+              <% if(searchs.index != undefined)
+              {
+                searchs.forEach(function (search) { %>
+                  <tr id="<%=index %>"> 
+                  <td class="index col-1" style="vertical-align: middle;"><%=search.index %></td>
+                  <td class="id col-1"  style="vertical-align: middle;"><%= search.id.videoId %></td>
+                  <td class="col-1"><a target="_blank" href="https://www.youtube.com/watch?v=<%= search.id.videoId %>"><img class="img-rounded" src="<%=search.snippet.thumbnails.default.url%>"/></a></td>
+                  <td class="col-3" id="title"><input type="text"  class="form-control mt-3" aria-describedby="title" placeholder="Enter votre titre" value="<%=search.snippet.title%>"></td>
+                  <td class="col-5" id="description"><input type="text"  class="form-control mt-3" aria-describedby="description" placeholder="Enter votre description" value="<%=search.snippet.description%>"></td>
+                  <td class="d-flex justify-content-center"><button  class="btn btn-sm btn-primary mt-2" onclick="GetCaptionsListById('<%=search.id.videoId %>')">Sous-titre</button></td>
+                  </tr>
+              <%})} 
+              else
+              {
+                var compteur = 1;
+                searchs.forEach(function (search) { %>
+                  <tr id="<%=compteur %>"> 
+                  <td class="index col-1"  style="vertical-align: middle;"><%=compteur %></td>
+                  <td class="id col-1"  style="vertical-align: middle;"><%= search.id.videoId %></td>
+                  <td class="col-1"><a target="_blank" href="https://www.youtube.com/watch?v=<%= search.id.videoId %>"><img class="img-rounded" src="<%=search.snippet.thumbnails.default.url%>"/></a></td>
+                  <td class="col-3" id="title"><input type="text"  class="form-control mt-3" aria-describedby="title" placeholder="Enter votre titre" value="<%=search.snippet.title%>"></td>
+                  <td class="col-5" id="description"><input type="text"  class="form-control mt-3" aria-describedby="description" placeholder="Enter votre description" value="<%=search.snippet.description%>"></td>
+                  <td class="d-flex justify-content-center " ><button class="btn btn-sm btn-primary mt-2" onclick="GetCaptionsListById('<%=search.id.videoId %>')">Sous-titre</button></td>
+                  </tr>
+                  <%  compteur++; }); } %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="row d-flex justify-content-between">
+      <div class="col-3 d-flex justify-content-center">
+          <button onclick="previous();"class="btn btn-primary mt-2 mr-auto ml-auto">Précèdent</button> 
+      </div>
+      <div class="col-3 d-flex justify-content-center">
+          <button onclick="next();" type="button" class="btn btn-secondary mt-2 mr-auto ml-auto">Suivant</button>
+      </div>
+    </div>
+    <div class="row d-flex justify-content-center">
+      <div class="col-6 d-flex justify-content-center">
+          <button onclick="updateall();" class="btn btn-warning mt-2 mr-auto ml-auto">Enregistrer</button> 
+      </div>
+      <div class="col-6 d-flex justify-content-center">
+          <button id="LogOut" type="button" class="btn btn-danger mt-2 mr-auto ml-auto">Se déconnecter</button>
+      </div>
+    </div>
+  </div>
+</body>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/bootstrap-table@1.19.0/dist/bootstrap-table.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js" integrity="sha256-T0Vest3yCU7pafRw9r+settMBX6JkKN06dqBnpQ8d30=" crossorigin="anonymous"></script>
+<script src="./script/search.js"></script>
+</html>

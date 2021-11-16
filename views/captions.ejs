@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Youtube API v3 Display</title>
+ 
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+</head>
+<body>
+  <div class="container-fluid" style="margin-top: 50px;">
+    <h1 style="text-align: center;font-family: Georgia, 'Times New Roman', Times, serif;">Gestion des sous-titres</h1>
+
+    <div class="row d-flex justify-content-center">
+      <div class="table-responsive"  style="margin-top: 50px;">
+        <table class="table table-hover" id="myTable">
+          <thead>
+            <tr>
+              <th scope="col">ID</th>
+              <th scope="col">Nom</th>
+              <th scope="col">Langue</th>
+              <th scope="col">Génération des sous-titres</th>
+              <th scope="col">Repérage audio</th>
+              <th scope="col">Adapté aux malentendants</th> 
+              <th scope="col">Difficulté de lecture</th> 
+              <th scope="col">Synchronisation Audio</th>
+              <th scope="col">Brouillon</th>
+              <th scope="col">Enregistrement</th>
+              <th scope="col">Supprimer</th>
+            </tr>
+          </thead>
+          <tbody>
+              <%  var compteur = 1; 
+              captions.forEach(function (caption) { 
+              <tr>
+                <td><%=compteur%></td>
+                <td class="id" hidden><%= caption.id %></td>
+                <td><input type="text" class="name" placeholder="Nom du sous-titrage" value="<%=caption.snippet.name%>"/></td>
+                <td><select class="language" value="<%=caption.snippet.language%>"><option value="fr">Français</option><option value="en">Anglais</option><option value="es">Espagnol</option></select></td>
+                <td><select class="trackKind" value="<%=caption.snippet.trackKindTrad%>"><option value="ASR">Par reconnaissance audio</option><option value="forced">Forcé</option><option value="standard">Standard</option></select></td>
+                <td><select class="audioTrackType" value="<%=caption.snippet.audioTrackTypeTrad%>"><option value="commentary">Audio alternatif avec commentaire</option><option value="descriptive">Audio alternatif avec description</option><option value="primary">Audio principal</option><option value="unknown">Défaut</option></select></td>
+                <td><select class="isCC" value="<%=caption.snippet.isCC%"><option value="True">Oui</option><option value="False">Non</option></select></td>
+                <td><select class="isEasyReader" value="<%=caption.snippet.isEasyReader%"><option value="True">Oui</option><option value="False">Non</option></select></td>
+                <td><select class="isAutoSynced" value="<%=caption.snippet.isAutoSynced%"><option value="True">Oui</option><option value="False">Non</option></select></td>
+                <td><select class="isDraft"><option value="True">Oui</option><option value="False">Non</option></select></td>
+                <td> <input class="<%=compteur%>" class="fileupload" type="file" style="visibility:hidden;height:0px;width:0px;"/><button onclick="$('#<%=compteur%> .fileupload').trigger('click'); return false;" class="btn btn-danger">uploader</button></td>
+                <td><button onclick="DeleteCaption('<%=caption.id%>')" class="btn btn-danger">Supprimer</button></td>
+              </tr>
+              <%});%>  
+          </tbody>
+        </table>
+      </div>
+
+      <div class="row d-flex justify-content-center">
+        <h1 style="text-align: center;font-family: Georgia, 'Times New Roman', Times, serif;">Ajouter des sous-titres</h1>
+
+        <div class="table-responsive"  style="margin-top: 50px;">
+          <table class="table table-hover" id="myTable">
+            <thead>
+              <tr>
+                <th scope="col">Nom</th>
+                <th scope="col">Langue</th>
+                <th scope="col">Génération des sous-titres</th>
+                <th scope="col">Repérage audio</th>
+                <th scope="col">Adapté aux malentendants</th> 
+                <th scope="col">Difficulté de lecture</th> 
+                <th scope="col">Synchronisation Audio</th>
+                <th scope="col">Brouillon</th>
+                <th scope="col">Enregistrement</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><input type="text" id="name" placeholder="Nom du sous-titrage"/></td>
+                <td><select id="language"><option value="fr">Français</option><option value="en">Anglais</option><option value="es">Espagnol</option></select></td>
+                <td><select id="trackKind"><option value="ASR">Par reconnaissance audio</option><option value="forced">Forcé</option><option value="standard">Standard</option></select></td>
+                <td><select id="audioTrackType"><option value="commentary">Audio alternatif avec commentaire</option><option value="descriptive">Audio alternatif avec description</option><option value="primary">Audio principal</option><option value="unknown">Défaut</option></select></td>
+                <td><select id="isCC"><option value="True">Oui</option><option value="False">Non</option></select></td>
+                <td><select id="isEasyReader"><option value="True">Oui</option><option value="False">Non</option></select></td>
+                <td><select id="isAutoSynced"><option value="True">Oui</option><option value="False">Non</option></select></td>
+                <td><select id="isDraft"><option value="True">Oui</option><option value="False">Non</option></select></td>
+                <td><input class="fileupload_insert"  id="<%=captions[0].snippet.videoId%>" type="file" style="visibility:hidden;height:0px;width:0px;"/><button onclick="$('.fileupload_insert').trigger('click'); return false;" class="btn btn-danger">uploader</a></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <div class="row d-flex justify-content-end">
+      <div class="col-6 d-flex justify-content-center">
+          <button id="LogOut" type="button" class="btn btn-danger mt-2 mr-auto ml-auto">Se déconnecter</button>
+      </div>
+    </div>
+  </div>
+ 
+  
+</body>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/bootstrap-table@1.19.0/dist/bootstrap-table.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<script src="./script/captions.js"></script>
+</html>
