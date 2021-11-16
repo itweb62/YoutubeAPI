@@ -2,7 +2,7 @@
 
 npm install 
 
-node index.ts
+node index.js
 
 "@types/node": "^16.11.7",
 "body-parser": "^1.19.0",
