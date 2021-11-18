@@ -9,7 +9,7 @@
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
 </head>
 <body>
-  <div class="container-fluid" style="margin-top: 50px;">
+  <div class="container" style="margin-top: 50px;">
     <h1 style="text-align: center;font-family: Georgia, 'Times New Roman', Times, serif;">Gestion des sous-titres</h1>
 
     <div class="row d-flex justify-content-center">
@@ -26,28 +26,159 @@
               <th scope="col">Difficulté de lecture</th> 
               <th scope="col">Synchronisation Audio</th>
               <th scope="col">Brouillon</th>
+              <th scope="col">Téléchargement</th>
               <th scope="col">Enregistrement</th>
               <th scope="col">Supprimer</th>
             </tr>
           </thead>
           <tbody>
               <%  var compteur = 1; 
-              captions.forEach(function (caption) { 
+              captions.forEach(function (caption) { %>  
               <tr>
                 <td><%=compteur%></td>
-                <td class="id" hidden><%= caption.id %></td>
+                <td class="id" hidden><%=caption.id %></td>
                 <td><input type="text" class="name" placeholder="Nom du sous-titrage" value="<%=caption.snippet.name%>"/></td>
-                <td><select class="language" value="<%=caption.snippet.language%>"><option value="fr">Français</option><option value="en">Anglais</option><option value="es">Espagnol</option></select></td>
-                <td><select class="trackKind" value="<%=caption.snippet.trackKindTrad%>"><option value="ASR">Par reconnaissance audio</option><option value="forced">Forcé</option><option value="standard">Standard</option></select></td>
-                <td><select class="audioTrackType" value="<%=caption.snippet.audioTrackTypeTrad%>"><option value="commentary">Audio alternatif avec commentaire</option><option value="descriptive">Audio alternatif avec description</option><option value="primary">Audio principal</option><option value="unknown">Défaut</option></select></td>
-                <td><select class="isCC" value="<%=caption.snippet.isCC%"><option value="True">Oui</option><option value="False">Non</option></select></td>
-                <td><select class="isEasyReader" value="<%=caption.snippet.isEasyReader%"><option value="True">Oui</option><option value="False">Non</option></select></td>
-                <td><select class="isAutoSynced" value="<%=caption.snippet.isAutoSynced%"><option value="True">Oui</option><option value="False">Non</option></select></td>
-                <td><select class="isDraft"><option value="True">Oui</option><option value="False">Non</option></select></td>
-                <td> <input class="<%=compteur%>" class="fileupload" type="file" style="visibility:hidden;height:0px;width:0px;"/><button onclick="$('#<%=compteur%> .fileupload').trigger('click'); return false;" class="btn btn-danger">uploader</button></td>
+                <td>
+                  <select class="language" value="<%=caption.snippet.language%>">
+                    <% switch(caption.snippet.language)
+                    {
+                      case "fr": %>  
+                      <option value="fr" selected>Français</option>
+                      <option value="en">Anglais</option>
+                      <option value="es">Espagnol</option>
+                      <%  break;
+                      case "en": %>  
+                      <option value="fr">Français</option>
+                      <option value="en" selected>Anglais</option>
+                      <option value="es">Espagnol</option>
+                      <%  break;
+                      case "en": %>  
+                      <option value="fr">Français</option>
+                      <option value="en">Anglais</option>
+                      <option value="es" selected>Espagnol</option>
+                      <%  break;
+                    }%>
+                  </select>
+                </td>
+                <td>
+                  <select class="trackKind" value="<%=caption.snippet.trackKind%>">
+                    <% switch(caption.snippet.trackKind)
+                    {
+                      case "asr": %>  
+                      <option value="asr" selected>Par reconnaissance audio</option>
+                      <option value="forced">Forcé</option>
+                      <option value="standard">Standard</option>
+                      <%  break;
+                      case "forced": %>  
+                      <option value="asr">Par reconnaissance audio</option>
+                      <option value="forced" selected>Forcé</option>
+                      <option value="standard">Standard</option>
+                      <%  break;
+                      case "standard": %>  
+                      <option value="asr">Par reconnaissance audio</option>
+                      <option value="forced">Forcé</option>
+                      <option value="standard" selected>Standard</option>
+                      <%  break;
+                    }%>
+                  </select>
+                </td>
+                <td>
+                  <select class="audioTrackType" value="<%=caption.snippet.audioTrackType%>">
+                    <% switch(caption.snippet.audioTrackType)
+                    {
+                      case "commentary": %>  
+                      <option value="commentary" selected>Audio alternatif avec commentaire</option>
+                      <option value="descriptive">Audio alternatif avec description</option>
+                      <option value="primary">Audio principal</option>
+                      <option value="unknown">Défaut</option>
+                      <%  break;
+                      case "descriptive": %>  
+                      <option value="commentary">Audio alternatif avec commentaire</option>
+                      <option value="descriptive" selected>Audio alternatif avec description</option>
+                      <option value="primary">Audio principal</option>
+                      <option value="unknown">Défaut</option>
+                      <%  break;
+                      case "primary": %>  
+                      <option value="commentary">Audio alternatif avec commentaire</option>
+                      <option value="descriptive">Audio alternatif avec description</option>
+                      <option value="primary" selected>Audio principal</option>
+                      <option value="unknown">Défaut</option>
+                      <%  break;
+                      case "unknown": %>  
+                      <option value="commentary">Audio alternatif avec commentaire</option>
+                      <option value="descriptive">Audio alternatif avec description</option>
+                      <option value="primary">Audio principal</option>
+                      <option value="unknown" selected>Défaut</option>
+                      <%  break;
+                    }%>
+                 
+                  </select>
+                </td>
+                <td>
+                  <select class="isCC" value="<%=caption.snippet.isCC%>">
+                    <% switch(caption.snippet.isCC)
+                    {
+                      case true: %>  
+                      <option value="true" selected>Oui</option>
+                      <option value="false">Non</option>
+                      <% break;
+                      case false: %>  
+                      <option value="true">Oui</option>
+                      <option value="false" selected>Non</option>
+                      <%  break;
+                    }%>
+                  </select>
+                </td>
+                <td>
+                  <select class="isEasyReader" value="<%=caption.snippet.isEasyReader%>">
+                    <% switch(caption.snippet.isEasyReader)
+                    {
+                        case true: %>  
+                        <option value="true" selected>Oui</option>
+                        <option value="false">Non</option>
+                        <% break;
+                        case false: %>  
+                        <option value="true">Oui</option>
+                        <option value="false" selected>Non</option>
+                        <%  break;
+                    }%>
+                  </select>
+                </td>
+                <td>
+                  <select class="isAutoSynced" value="<%=caption.snippet.isAutoSynced%>">
+                    <% switch(caption.snippet.isAutoSynced)
+                    {
+                      case true: %>  
+                      <option value="true" selected>Oui</option>
+                      <option value="false">Non</option>
+                      <% break;
+                      case false: %>  
+                      <option value="true">Oui</option>
+                      <option value="false" selected>Non</option>
+                      <%  break;
+                    }%>
+                  </select>
+                </td>
+                <td>
+                  <select class="isDraft" value="<%=caption.snippet.isDraft%>">
+                    <% switch(caption.snippet.isDraft)
+                    {
+                      case true: %>  
+                      <option value="true" selected>Oui</option>
+                      <option value="false">Non</option>
+                      <% break;
+                      case false: %>  
+                      <option value="true">Oui</option>
+                      <option value="false" selected>Non</option>
+                      <%  break;
+                    }%>
+                  </select>
+                </td>
+                <td><button onclick="DownloadCaption('<%=caption.id%>')" class="btn btn-danger">Télécharger</button></td>
+                <td><input class="<%=compteur%>" class="fileupload" type="file" style="visibility:hidden;height:0px;width:0px;"/><button onclick="$('#<%=compteur%> .fileupload').trigger('click'); return false;" class="btn btn-danger">Uploader</button></td>
                 <td><button onclick="DeleteCaption('<%=caption.id%>')" class="btn btn-danger">Supprimer</button></td>
               </tr>
-              <%});%>  
+              <%})%>  
           </tbody>
         </table>
       </div>
@@ -76,10 +207,10 @@
                 <td><select id="language"><option value="fr">Français</option><option value="en">Anglais</option><option value="es">Espagnol</option></select></td>
                 <td><select id="trackKind"><option value="ASR">Par reconnaissance audio</option><option value="forced">Forcé</option><option value="standard">Standard</option></select></td>
                 <td><select id="audioTrackType"><option value="commentary">Audio alternatif avec commentaire</option><option value="descriptive">Audio alternatif avec description</option><option value="primary">Audio principal</option><option value="unknown">Défaut</option></select></td>
-                <td><select id="isCC"><option value="True">Oui</option><option value="False">Non</option></select></td>
-                <td><select id="isEasyReader"><option value="True">Oui</option><option value="False">Non</option></select></td>
-                <td><select id="isAutoSynced"><option value="True">Oui</option><option value="False">Non</option></select></td>
-                <td><select id="isDraft"><option value="True">Oui</option><option value="False">Non</option></select></td>
+                <td><select id="isCC"><option value="true">Oui</option><option value="false">Non</option></select></td>
+                <td><select id="isEasyReader"><option value="true">Oui</option><option value="false">Non</option></select></td>
+                <td><select id="isAutoSynced"><option value="true">Oui</option><option value="false">Non</option></select></td>
+                <td><select id="isDraft"><option value="true">Oui</option><option value="false">Non</option></select></td>
                 <td><input class="fileupload_insert"  id="<%=captions[0].snippet.videoId%>" type="file" style="visibility:hidden;height:0px;width:0px;"/><button onclick="$('.fileupload_insert').trigger('click'); return false;" class="btn btn-danger">uploader</a></td>
               </tr>
             </tbody>

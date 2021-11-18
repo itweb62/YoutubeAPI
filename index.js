@@ -93,6 +93,8 @@ app.post("/search_by_keywords", function(req, res) {
   if(req.body.CaptionsFilter == "True") CaptionsFilter = "closedCaption";
   else CaptionsFilter = "any";
 
+  console.log(req.body.Search_query);
+
   if(fs.existsSync('./Saved_file/search'+req.body.Search_query+'.json')) {           
       fs.readFile('./Saved_file/search'+req.body.Search_query+'.json', (err, data) => {
         Search_Ouput = JSON.parse(data);
